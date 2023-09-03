@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>echoX - File Uploads</title>
+</head>
+<body>
+    <h1>echoX - File Uploads</h1>
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <label for="fileUpload">Select file to upload:</label>
+        <input type="file" name="fileUpload" id="fileUpload" required>
+        <br><br>
+        <input type="submit" value="Upload File">
+    </form>,
+
+    <hr>
+
+    <h2>X Category Files:</h2>
+
+    <?php
+        // Fetch and display uploaded files in X category
+
+        $fileDirectory = "uploads/";
+        $xCategoryDirectory = $fileDirectory . "X/";
+
+        if ($handle = opendir($xCategoryDirectory)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
+                    $filePath = $xCategoryDirectory . $file;
+                    echo "<a href=\"$filePath\" download>$file</a><br>";
+                }
+            }
+            closedir($handle);
+        } else {
+            echo "Could not open directory.";
+        }
+    ?>
+</body>
+</html>
